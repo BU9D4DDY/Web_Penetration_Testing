@@ -2,6 +2,8 @@
 
 ##### What is penetration testing
 
+![Penetration test graphical representation](D:\Projects\Web_Penetration_Testing\_resources\penetration-test_light-1024x576.png)
+
 A penetration test, also known as a pen test, is a simulated cyber attack against a system to check for exploitable vulnerabilities. In the context of web application security, penetration testing is commonly used to augment a web application firewall (WAF).
 
 Pen testing can involve the attempted breaching of any number of application systems, (e.g., application protocol interfaces (APIs), frontend/backend servers) to uncover vulnerabilities, such as unsanitized inputs that are susceptible to code injection attacks.
@@ -10,7 +12,7 @@ Pen testing can involve the attempted breaching of any number of application sys
 
 The pen testing process can be broken down into five stages.
 
-![Five Stages of Penetration Testing](https://www.imperva.com/learn/wp-content/uploads/sites/13/2019/01/pen-testing.jpg)
+![Five Stages of Penetration Testing](D:\Projects\Web_Penetration_Testing\_resources\pen-testing.jpg)
 
 **1. Planning and reconnaissance**
 The first stage involves:
