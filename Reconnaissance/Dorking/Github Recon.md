@@ -1,6 +1,6 @@
 **GitHub** contains a lot of sensitive information which can be useful for an attacker like API keys, passwords, customer data etc. This sensitive information leaks can cost a company thousand dollars of damage.
 
-![GitHub](../_resources/GitHub.jpg)
+![GitHub](../../_resources/GitHub.jpg)
 
 Leaks usually fall into one of these categories (ranked from most to least impactful):
 
@@ -10,7 +10,7 @@ Leaks usually fall into one of these categories (ranked from most to least impac
 4. **Data science scripts** - SQL queries, R scripts, and Jupyter projects can reveal sensitive information. These repos also tend to have "test data" files hanging around.
 5. **Hostnames/metadata** - The most common result. Most companies don't consider this a vulnerability, but they can help refine future searches
 
-![GitHub](../_resources/E.png)
+![GitHub](../../_resources/E.png)
 
 GitHub Recon can be accomplished manually or by automation using some tools.
 
@@ -18,35 +18,35 @@ GitHub Recon can be accomplished manually or by automation using some tools.
 
 Code search is nothing but the use of some keywords that helps you to find sensitive things like passwords, API keys, database files etc.
 
-![img](../_resources/1.png)
+![img](../../_resources/1.png)
 
 **How to do a recon on GitHub ?**
 
 1. You can use simple queries like`facebook.com` or google.com etc. to search for a particular company.
 
-![img](../_resources/2.png)
+![img](../../_resources/2.png)
 
 2. You can also use multi-word strings like **`“Authorization: Bearer”`**
 
-![img](../_resources/w.png)
+![img](../../_resources/w.png)
 
 Now you need to open a repository and have to search for the authorization token or password or any other sensitive information.
 
-![img](../_resources/d.png)
+![img](../../_resources/d.png)
 
 3. You can search for specific filenames like `“filename:vim_settings.xml”`
 
-![img](../_resources/Ow.png)
+![img](../../_resources/Ow.png)
 
 4. You can search for specific languages like `“language:PHP”`
 
-![img](../_resources/kQ.png)
+![img](../../_resources/kQ.png)
 
 This was the basics of the github dorking but you can also combine your queries like **`“facebook.com filename:vim_settings.xml”`** which will give you all the vim_settings.xml file of a particular company Facebook. Same way you can also perform different query searches.
 
 Apart from repositories you can also check for **code**, commits, issues, discussions, packages, marketplace, **topics**, **wikis** and **users.**
 
-![img](../_resources/y6Og.png)
+![img](../../_resources/y6Og.png)
 
 You should be looking for URLs, API keys, usernames, passwords etc. It might be possible that someone has uploaded something sensitive.
 
@@ -60,7 +60,7 @@ You should be looking for URLs, API keys, usernames, passwords etc. It might be 
 >
 > https://gist.github.com/EdOverflow/8bd2faad513626c413b8fc6e9d955669
 
-![img](../_resources/hacks.png)
+![img](../../_resources/hacks.png)
 
 ```
 **Specific Org search**
@@ -348,11 +348,11 @@ Sometimes automating the boring tasks can help give you a basic overview of what
 
 - Use github + translate if you are searching for leaks for Russian, French .... etc programs. that leads to some good results.
 
-![img](../_resources/J3jA.jpeg)
+![img](../../_resources/J3jA.jpeg)
 
 - Check Commit Histories
 
-![image](../_resources/eb5b5.png)
+![image](../../_resources/eb5b5.png)
 
 - To start finding sensitive information, identify a target.
 
