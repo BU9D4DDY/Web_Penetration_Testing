@@ -1,0 +1,337 @@
+Yes, everyone knows [Shodan](https://www.shodan.io/) (and who does not know, and wants to hack, should know). I’m not sure if Shodan Hacks is a good name, but I like it. It also reminds me of the [Google Hacks](https://0ut3r.space/2020/07/24/googledorks/) I wrote about yesterday. Similar principle of operation only on different input data.
+
+![shodan hacks](../../_resources/shodanhacks.png)
+
+Google indexes pages and materials hosted on www servers. Shodan indexes all devices connected to the internet. Not only web servers, but also printers and network devices, webcams, voip phones, washing machines, refrigerators, gas station pumps, whole [IoT](https://en.wikipedia.org/wiki/Internet_of_things) and other strange things connected to the Internet. It’s like running [nmap](https://nmap.org/) and doing active reconnaissance for the entire Internet. Thanks to Shodan we can check the information on the stage of intelligence gathering ([OSINT](https://en.wikipedia.org/wiki/Open-source_intelligence)), leave no traces of our intelligence, without arousing the suspicion of our target.
+
+## Basic Shodan Queries
+
+**city:** - Find devices in a particular city. Example: **city:**“México”
+
+**country:** - Find devices in a particular country. Example: **country:**“MX”
+
+**geo:** - Find devices by giving geographical coordinates. Example: **geo:**“89.256487,20.111111”
+
+**hostname:** - Find devices matching the hostname. Example: **server:** “gws” **hostname:**“google”
+
+**net:** - Find devices based on an IP address or /x CIDR. Example: **net:**210.214.0.0/16
+
+**os:** - Find devices based on operating system. Example: **os:**“Windows IIS”
+
+**port:** - Find devices based on open ports. Example: apache **port:**8080
+
+**before/after:** - Find devices before or after between a given time. Example: apache **after:**01/01/2010 **before:**01/09/2010
+
+Of course there is more and you can also combine this queries to make better results. Check official [documentation](https://help.shodan.io/the-basics/search-query-fundamentals) and [guide](https://leanpub.com/shodan).
+
+## Examples
+
+Here are some examples of Shodan Dorks I used in the past (one per line). Copy paste it to the web browser and check how the queries were built.
+
+```
+https://www.shodan.io/search?query=Hipcam RealServer/V1.0
+https://www.shodan.io/search?query=”Active Management Technology”
+https://www.shodan.io/search?query=Server%3A+uc-httpd+1.0.0
+https://www.shodan.io/search?query=http.html%3A%2Fdana-na
+https://www.shodan.io/search?query=http.title%3A%22Index+of+%2F%22+http.html%3A%22.pem%22
+https://www.shodan.io/search?query=%22220%22+%22230+Login+successful.%22+port%3A21
+https://www.shodan.io/search?query=HP-ILO-4+%21%22HP-ILO-4%2F2.53%22+%21%22HP-ILO-4%2F2.54%22+%21%22HP-ILO-4%2F2.55%22+%21%22HP-ILO-4%2F2.60%22+%21%22HP-ILO-4%2F2.61%22+%21%22HP-ILO-4%2F2.62%22+%21%22HP-iLO-4%2F2.70%22+port%3A1900
+https://www.shodan.io/search?query=%22Docker+Containers%3A%22+port%3A2375
+https://www.shodan.io/search?query=%22MongoDB+Server+Information%22+port%3A27017+-authentication
+https://www.shodan.io/search?query=Microsoft-IIS/6.0 – CVE-2017-7269 (https://github.com/edwardz246003/IIS_exploit)
+https://www.shodan.io/search?query=’Microsoft-IIS/7.5′ ‘It works!’ -‘Content-Type’ -‘Set-Cookie’ – Hunting Red Team Empire C2 Infrastructure
+https://www.shodan.io/search?query=Hipcam RealServer/V1.0
+https://www.shodan.io/search?query=”Active Management Technology”
+https://www.shodan.io/search?query=”Standard Manageability” – CVE-2017-5689
+https://www.shodan.io/search?query=GoAhead 5ccc069c403ebaf9f0171e9517f40e41 – CVE-2017-8221,CVE-2017-8222,CVE-2017-8223,CVE-2017-8224,CVE-2017-8225
+https://www.shodan.io/search?query=title:”RAKO Bridge Control Panel”
+https://www.shodan.io/search?query=PK5001Z login org:”CenturyLink” – CVE-2016-10401
+https://www.shodan.io/search?query=Server%3A+uc-httpd+1.0.0
+https://www.shodan.io/search?query=http.favicon.hash%3A1485257654 – SonarQube installations
+https://www.shodan.io/search?query=title%3ASecuritySpy – SecuritySpy web cam portals
+https://www.shodan.io/search?query=port%3A2375+product%3A%22Docker%22 – Docker installations
+https://www.shodan.io/search?query=port%3A%222379%22+product%3A%22etcd%22 – elweb.co/the-security-footgun-in-etcd/
+https://www.shodan.io/search?query=http.favicon.hash%381586312 – Default Jenkins installations
+https://www.shodan.io/search?query=WASRemoteRuntimeVersion – IBM WebSphere version disclosure
+https://www.shodan.io/search?query=var+isDefaultPwd+%3D+%271%27%3B – CVE-2018-7900
+https://www.shodan.io/search?query=http.html%3A%2Fdana-na
+https://www.shodan.io/search?query=http.title%3A%22Index+of+%2F%22+http.html%3A%22.pem%22
+https://www.shodan.io/search?query=%22220%22+%22230+Login+successful.%22+port%3A21
+https://www.shodan.io/search?query=%22Intel%28R%29+Active+Management+Technology%22+port%3A623%2C664%2C16992%2C16993%2C16994%2C16995 – Intel Active Management CVE-201(7|9|8)
+https://www.shodan.io/search?query=HP-ILO-4+%21%22HP-ILO-4%2F2.53%22+%21%22HP-ILO-4%2F2.54%22+%21%22HP-ILO-4%2F2.55%22+%21%22HP-ILO-4%2F2.60%22+%21%22HP-ILO-4%2F2.61%22+%21%22HP-ILO-4%2F2.62%22+%21%22HP-iLO-4%2F2.70%22+port%3A1900
+https://www.shodan.io/search?query=%22Docker+Containers%3A%22+port%3A2375
+https://www.shodan.io/search?query=%22MongoDB+Server+Information%22+port%3A27017+-authentication
+https://www.shodan.io/search?query=http.title%3A%22Priv8+Mailer%22 – Detect PHP Mailer
+https://www.shodan.io/search?query=http.favicon.hash%3A116323821 – Detect Spring Boot
+https://www.shodan.io/search?query=http.favicon.hash%3A-335242539 – Detect F5 BIG-IP devices
+https://www.shodan.io/search?query=http.favicon.hash%3A442749392 – Detect Microsoft Exchange 2010
+https://www.shodan.io/search?query=http.favicon.hash%3A679065580 – Detect Loxone Smart Homes
+https://www.shodan.io/search?query=aclara+port%3A%2280%22 – Detect Aclara Smart Meter
+https://www.shodan.io/search?query=PLC+name%3A+S7_Turbine – Detect S7 PLC Turbine
+https://www.shodan.io/search?query=os%3A%22Playstation+4%22 – Detect Sony Playstation 4 systems
+https://www.shodan.io/search?query=title%3A%22octoprint%22 – Detect RaspberryPi Octoprint 3D printers
+https://www.shodan.io/search?query=http.html_hash%3A-1467534799 – Detect Predator The Thief malware
+https://images.shodan.io/?query=port%3A554+rtsp
+```
+
+## Shodan dork list
+
+Here is Shodan dork list with some other examples ready to use.
+
+**Citrix** - Find Citrix Gateway. Example: `title:"citrix gateway"`
+
+**Wifi Passwords** - Helps to find the cleartext wifi passwords in Shodan. Example: `html:"def_wirelesspassword"`
+
+**Surveillance Cams** - With username admin and password. Example: `NETSurveillance uc-httpd`
+
+**Fuel Pumps connected to internet** - No auth required to access CLI terminal. Example: `"privileged command" GET`
+
+**Windows RDP Password** - But may contain secondary windows auth. Example: `"\x03\x00\x00\x0b\x06\xd0\x00\x00\x124\x00"`
+
+**Mongo DB servers** - It may give info about mongo db servers and dashboard. Example: `"MongoDB Server Information" port:27017 -authentication`
+
+**FTP servers allowing anonymous access** - Complete Anon access. Example: `"220" "230 Login successful." port:21`
+
+**Jenkins** - Jenkins Unrestricted Dashboard. Example: `x-jenkins 200`
+
+**Hacked routers** - Routers which got compromised. Example: `hacked-router-help-sos`
+
+**Open ATM** - May allow for ATM Access availability. Example: `NCR Port:"161"`
+
+**Telnet Access** - NO password required for telnet access. Example: `port:23 console gateway`
+
+**Misconfigured Wordpress Sites** - The wp-config.php if accessed can give out the database credentials. Example: `http.html:"* The wp-config.php creation script uses this file"`
+
+**Hiring** - Find sites hiring. Example: `"X-Recruiting:"`
+
+**Android Root Bridge** - Find android root bridges with port 5555. Example: `"Android Debug Bridge" "Device" port:5555`
+
+**Etherium Miners** - Shows the miners running ETH. Example: `"ETH - Total speed"`
+
+**Tesla Powerpack charging Status** - Helps to find the charging status of tesla powerpack. Example: `http.title:"Tesla PowerPack System" http.component:"d3" -ga3ca4f2`
+
+If you have any interesting please let me know in the comments, I will add them to the list.
+
+## Shodan Command-Line Interface
+
+The [Shodan command-line interface](https://cli.shodan.io/) (CLI) is packaged with the official Python library for Shodan, which means if you’re running the latest version of the library you already have access to the CLI. The Shodan CLI has a lot of commands, check this [website](https://cli.shodan.io/) to see all of them. For the full list of commands just run the tool without any arguments:
+
+```
+shodan
+```
+
+Example:
+
+```
+shodan search --fields ip_str,port,org,hostnames microsoft iis 6.0
+```
+
+![Shodan Cli Search](../../_resources/shodan-cli-search.png)
+
+## Automation
+
+Of course, there are tons of interesting programs and scripts that use Shodan database. Here are a few that I like and find useful. All these tools use [Shodan API](https://developer.shodan.io/) which should be configured in each tool before run. Some of the functions are limited in free Shodan version. It is worth to register and buy full account. Every Black Friday there is always big discount for this (I bought mine lifetime account for 5$!)
+
+### shodansploit
+
+With Shodan Exploit, you will have all your calls on your terminal. It also allows you to make detailed searches. All you have to do without running Shodansploiti is to add shodan api.
+
+```
+python shodansploit.py
+
+[1] GET > /shodan/host/{ip} 
+[2] GET > /shodan/host/count
+[3] GET > /shodan/host/search 
+[4] GET > /shodan/host/search/tokens 
+[5] GET > /shodan/ports 
+[6] GET > /shodan/exploit/author
+[7] GET > /shodan/exploit/cve
+[8] GET > /shodan/exploit/msb
+[9] GET > /shodan/exploit/bugtraq-id
+[10] GET > /shodan/exploit/osvdb
+[11] GET > /shodan/exploit/title
+[12] GET > /shodan/exploit/description
+[13] GET > /shodan/exploit/date
+[14] GET > /shodan/exploit/code
+[15] GET > /shodan/exploit/platform
+[16] GET > /shodan/exploit/port
+[17] GET > /dns/resolve
+[18] GET > /dns/reverse 
+[19] GET > /labs/honeyscore/{ip}
+[20] GET > /account/profile 
+[21] GET > /tools/myip 
+[22] GET > /tools/httpheaders
+[23] GET > /api-info 
+[24] Exit
+```
+
+**GitHub**: https://github.com/shodansploit/shodansploit
+
+### theHarvester
+
+theHarvester is a very simple to use, yet powerful and effective tool designed to be used in the early stages of a
+penetration test or red team engagement. Use it for open source intelligence ([OSINT](https://en.wikipedia.org/wiki/Open-source_intelligence)) gathering to help determine a
+company’s external threat landscape on the internet. The tool gathers emails, names, subdomains, IPs and URLs using
+multiple public data sources that include also Shodan.
+
+```
+sage: __main__.py [-h] -d DOMAIN [-l LIMIT] [-S START] [-g] [-p] [-s] [-v] [-e DNS_SERVER] [-t DNS_TLD] [-n] [-c] [-f FILENAME] [-b SOURCE]
+
+theHarvester is used to gather open source intelligence (OSINT) on a company or domain.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DOMAIN, --domain DOMAIN
+                        company name or domain to search
+  -l LIMIT, --limit LIMIT
+                        limit the number of search results, default=500
+  -S START, --start START
+                        start with result number X, default=0
+  -g, --google-dork     use Google Dorks for Google search
+  -p, --port-scan       scan the detected hosts and check for Takeovers (21,22,80,443,8080)
+  -s, --shodan          use Shodan to query discovered hosts
+  -v, --virtual-host    verify host name via DNS resolution and search for virtual hosts
+  -e DNS_SERVER, --dns-server DNS_SERVER
+                        DNS server to use for lookup
+  -t DNS_TLD, --dns-tld DNS_TLD
+                        perform a DNS TLD expansion discovery, default False
+  -n, --dns-lookup      enable DNS server lookup, default False
+  -c, --dns-brute       perform a DNS brute force on the domain
+  -f FILENAME, --filename FILENAME
+                        save the results to an HTML and/or XML file                                                                                       
+  -b SOURCE, --source SOURCE                                                                                                                              
+                        baidu, bing, bingapi, certspotter, crtsh, dnsdumpster, dogpile, duckduckgo, github-code, google, hunter, intelx, linkedin,        
+                        linkedin_links, netcraft, otx, securityTrails, spyse(disabled for now), threatcrowd, trello, twitter, vhost, virustotal, yahoo,   
+                        all
+```
+
+`-s` parameter is for Shodan
+
+**GitHub**: https://github.com/laramies/theHarvester
+
+### ReconDog
+
+Reconnaissance Swiss Army Knife - it is frontend for many tools, to get results in one place. Wizard + CLA interface (Command Line Argument interface). Can extracts targets from STDIN (piped input) and act upon them. All the information is extracted with APIs, no direct contact is made to the target.
+
+Detect honeypot option uses shodan.io to check if target is a honeypot
+
+```
+hoek@bughunter:/opt/ReconDog$ python dog                                                                     
+ _____                         ____                                                                         
+| __  |___ ___ ___ ___  |\_/| |    \ ___ ___
+|    -| -_|  _| . |   | |. .| |  |  | . | . |
+|__|__|___|___|___|_|_|  \_/  |____/|___|_  |
+                                        |___| v2.0
+1. Censys
+2. NS lookup
+3. Port scan
+4. Detect CMS
+5. Whois lookup
+6. Detect honeypot
+7. Find subdomains
+8. Reverse IP lookup
+9. Detect technologies
+0. All
+>>
+```
+
+**GitHub**: https://github.com/s0md3v/ReconDog
+
+### GoLismero
+
+GoLismero is an open source framework for security testing. It’s currently geared towards web security, but it can easily be expanded to other kinds of scans. This is huge tool and one of the source it gets information is Shodan.
+
+```
+python2 /opt/golismero/golismero.py scan <target_IP> -o <output file name>
+```
+
+and with nice html output:
+
+```
+sudo python2 golismero.py scan https://example.com -o - -o report.html
+```
+
+**GitHub**: https://github.com/golismero/golismero
+
+## This is the end
+
+Yep, that’s all I have about Shodan. Mostly I use it for reconnaissance or when I want to look at someone’s backyard, shop, office or parrot cage at the camera view ;)
+
+Check other [device search engines](https://0ut3r.space/2018/11/20/devices-search/).
+
+### Bonus - IP Cameras Default Passwords Directory
+
+Manufacturer List Default Passwords
+
+```
+ACTi: admin/123456 or Admin/123456
+Amcrest: admin/admin
+American Dynamics: admin/admin or admin/9999 
+Arecont Vision: none
+AvertX: admin/1234
+Avigilon: Previously admin/admin, changed to Administrator/<blank> in later firmware versions
+Axis: Traditionally root/pass, new Axis cameras require password creation during first login (note that root/pass may be used for ONVIF access, but logging into the camera requires root password creation)
+Basler: admin/admin
+Bosch: None required, but new firmwares (6.0+) prompt users to create passwords on first login
+Brickcom: admin/admin
+Canon: root/camera
+Cisco: No default password, requires creation during first login
+Dahua: Requires password creation on first login. Previously this process was recommended but could be canceled; older models default to admin/admin
+Digital Watchdog: admin/admin
+DRS: admin/1234
+DVTel: Admin/1234
+DynaColor: Admin/1234
+FLIR: admin/fliradmin
+FLIR (Dahua OEM): admin/admin
+FLIR (Quasar/Ariel): admin/admin
+Foscam: admin/<blank>
+GeoVision: admin/admin
+Grandstream: admin/admin
+Hanwha: admin/no default password, must be created during initial setup
+Hikvision: Firmware 5.3.0 and up requires unique password creation; previously admin/12345
+Honeywell: admin/1234
+IndigoVision (Ultra): none
+IndigoVision (BX/GX): Admin/1234
+Intellio: admin/admin
+Interlogix admin/1234
+IQinVision: root/system
+IPX-DDK: root/admin or root/Admin
+JVC: admin/jvc
+Longse: admin/12345
+Lorex: admin/admin
+LTS: Requires unique password creation; previously admin/12345
+March Networks: admin/<blank>
+Mobotix: admin/meinsm
+Northern: Firmware 5.3.0 and up requires unique password creation; previously admin/12345
+Oncam: admin/admin
+Panasonic: Firmware 2.40 and up requires username/password creation; previously admin/12345
+Pelco: New firmwares require unique password creation; previously admin/admin
+Pixord: admin/admin
+Q-See: admin/admin or admin/123456
+Reolink: admin/<blank>
+Samsung Electronics: root/root or admin/4321
+Samsung Techwin (old): admin/1111111
+Samsung (new): Previously admin/4321, but new firmwares require unique password creation
+Sanyo: admin/admin
+Scallop: admin/password
+Sentry360 (mini): admin/1234
+Sentry360 (pro): none  
+Sony: admin/admin
+Speco: admin/1234
+Stardot: admin/admin
+Starvedia: admin/<blank>
+Sunell: admin/admin
+SV3C: admin/123456
+Swann: admin/12345 
+Trendnet: admin/admin
+Toshiba: root/ikwd
+VideoIQ: supervisor/supervisor
+Vivotek: root/<blank>
+Ubiquiti: ubnt/ubnt
+Uniview: admin/123456
+W-Box (Hikvision OEM, old): admin/wbox123
+W-Box (Sunell OEM, new): admin/admin
+Wodsee: admin/<blank>
+```
+
+Default passwords are always in each manufacturer guide. Use Google to find it.
