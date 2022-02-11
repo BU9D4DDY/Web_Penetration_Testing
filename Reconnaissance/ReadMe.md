@@ -131,11 +131,11 @@ Burp Suite has an equivalent tool called the crawler, but I prefer ZAP’s spide
 
 ###### Third-Party Hosting  
 
-![image-20211208165233818](../_resources/image-20211208165233818.png)![image-20211208165250140](C:\Users\Diaa\AppData\Roaming\Typora\typora-user-images\image-20211208165250140.png)
+![image-20211208165233818](../_resources/image-20211208165233818.png)![image-20211208165250140](../_resources/image-20211208165250140.png)
 
 Finally, you can try to brute-force buckets by using keywords. Lazys3(https://github.com/nahamsec/lazys3/) is a tool that helps you do this. It relies on a wordlist to guess buckets that are permutations of common bucket names.  
 
-![image-20211208165427112](../_resources/image-20211208165427112.png)![image-20211208165931398](C:\Users\Diaa\AppData\Roaming\Typora\typora-user-images\image-20211208165931398.png)
+![image-20211208165427112](../_resources/image-20211208165427112.png)![image-20211208165931398](../_resources/image-20211208165931398.png)
 
 ###### GitHub Recon
 
