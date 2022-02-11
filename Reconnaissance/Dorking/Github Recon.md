@@ -308,6 +308,8 @@ Sometimes automating the boring tasks can help give you a basic overview of what
 >
 > https://github.com/hisxo/gitGraber
 >
+> https://github.com/streaak/keyhacks/
+>
 > https://github.com/N0MoreSecr3ts/wraith
 >
 > https://github.com/obheda12/GitDorker
