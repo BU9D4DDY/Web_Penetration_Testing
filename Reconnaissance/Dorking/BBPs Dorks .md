@@ -96,30 +96,34 @@ And Here is a word file containing about 7.5K bounty programs
 
 > https://drive.google.com/file/d/1Ui19rhJ5ER0ZS2_6HQSFp3YJmV6yWUNP/view
 
+TIP:
+
+- Gather domains from content-security-policy @geeknik
+
+    ```bash
+    curl -v -silent https://$domain --stderr - | awk '/^content-security-policy:/' | grep -Eo "[a-zA-Z0-9./?=_-]*" |  sed -e '/\./!d' -e '/[^A-Za-z0-9._-]/d' -e 's/^\.//' | sort -u
+    ```
+
+    -- Try To change "content-security-policy" with some other dorks...
+
 ## Bug Bounty Platforms
+
+> [Bug Bounty Platforms | MindMeister](https://www.mindmeister.com/1578309575/bug-bounty-platforms?fullscreen=1#)
+>
+> https://github.com/disclose/bug-bounty-platforms
 
 **Open For Signup**
 
-- [Bugcrowd](https://www.bugcrowd.com/)
-- [HackerOne](https://www.hackerone.com/)
-- [OpenBugBounty](https://www.openbugbounty.org/)
-- [YesWeHack](https://www.yeswehack.com/)
-- [BountyFactory](https://bountyfactory.io/)
-- [Intigriti](https://intigriti.be/)
-- [Bugbountyjp](https://bugbounty.jp/)
-- [Safehats](https://safehats.com/)
-- [BugbountyHQ](https://www.bugbountyhq.com/)
-- [Hackerhive](https://hackerhive.io/)
-- [Hackenproof](https://hackenproof.com/)
-- [Hacktrophy](https://hacktrophy.com/)
-- [CESPPA](https://www.cesppa.com/)
+| [Bugcrowd](https://www.bugcrowd.com/)           | [BountyFactory](https://bountyfactory.io/) | [BugbountyHQ](https://www.bugbountyhq.com/) |
+| ----------------------------------------------- | ------------------------------------------ | ------------------------------------------- |
+| [HackerOne](https://www.hackerone.com/)         | [Intigriti](https://intigriti.be/)         | [Hackerhive](https://hackerhive.io/)        |
+| [OpenBugBounty](https://www.openbugbounty.org/) | [Bugbountyjp](https://bugbounty.jp/)       | [Hackenproof](https://hackenproof.com/)     |
+| [YesWeHack](https://www.yeswehack.com/)         | [Safehats](https://safehats.com/)          | [Hacktrophy](https://hacktrophy.com/)       |
 
 **Invite Based Platforms**
 
-- [Synack](https://www.synack.com/red-team/)
-- [Cobalt](https://cobalt.io/)
-- [Zerocopter](https://zerocopter.com/)
-- [Yogosha](https://www.yogosha.com/)
-- [Bugbountyzone](https://bugbountyzone.com/)
-- [Antihack.me](http://www.antihack.me/)
-- [Vulnscope](https://www.vulnscope.com/)
+| [Synack](https://www.synack.com/red-team/) | [Zerocopter](https://zerocopter.com/)  | [Bugbountyzone](https://bugbountyzone.com/) |
+| ------------------------------------------ | -------------------------------------- | ------------------------------------------- |
+| [Cobalt](https://cobalt.io/)               | [Antihack.me](http://www.antihack.me/) | [Vulnscope](https://www.vulnscope.com/)     |
+| [Yogosha](https://www.yogosha.com/)        |                                        |                                             |
+
