@@ -92,6 +92,6 @@ site:*.be responsible disclosure
 site:*.au responsible disclosure
 ```
 
-And Here is a word file containing about 100K bounty programs
+And Here is a word file containing about 7.5K bounty programs
 
 https://drive.google.com/file/d/1Ui19rhJ5ER0ZS2_6HQSFp3YJmV6yWUNP/view
