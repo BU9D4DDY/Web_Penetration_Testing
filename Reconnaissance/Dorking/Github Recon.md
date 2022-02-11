@@ -54,6 +54,8 @@ You should be looking for URLs, API keys, usernames, passwords etc. It might be 
 
 > https://github.com/jcesarstef/ghhdb-Github-Hacking-Database
 >
+> https://github.com/litt1eb0yy/Awesome-Dorks/blob/master/github-dorks.txt
+>
 > https://github.com/vinaysonavane/GitHubDorks
 >
 > https://github.com/hariyopmail/Git-dorks-secrets

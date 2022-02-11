@@ -48,6 +48,8 @@ Finally, you can also combine search terms for a more accurate search. For examp
 
 #### **And Here is a list of most of google dorks ..!**
 
+> https://github.com/litt1eb0yy/Awesome-Dorks/blob/master/google-dorks.txt
+>
 > https://github.com/BullsEye0/google_dork_list
 >
 > https://github.com/thomasdesr/Google-dorks

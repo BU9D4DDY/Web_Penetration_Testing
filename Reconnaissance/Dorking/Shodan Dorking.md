@@ -1,8 +1,8 @@
-Yes, everyone knows [Shodan](https://www.shodan.io/) (and who does not know, and wants to hack, should know). I’m not sure if Shodan Hacks is a good name, but I like it. It also reminds me of the [Google Hacks](https://0ut3r.space/2020/07/24/googledorks/) I wrote about yesterday. Similar principle of operation only on different input data.
+Everyone knows [Shodan](https://www.shodan.io/). Similar principle of operation, like Google Dorking, only on different input data.
 
 ![shodan hacks](../../_resources/shodanhacks.png)
 
-Google indexes pages and materials hosted on www servers. Shodan indexes all devices connected to the internet. Not only web servers, but also printers and network devices, webcams, voip phones, washing machines, refrigerators, gas station pumps, whole [IoT](https://en.wikipedia.org/wiki/Internet_of_things) and other strange things connected to the Internet. It’s like running [nmap](https://nmap.org/) and doing active reconnaissance for the entire Internet. Thanks to Shodan we can check the information on the stage of intelligence gathering ([OSINT](https://en.wikipedia.org/wiki/Open-source_intelligence)), leave no traces of our intelligence, without arousing the suspicion of our target.
+Google indexes pages and materials hosted on www servers. Shodan indexes all devices connected to the internet. Not only web servers, but also printers and network devices, webcams, voip phones, washing machines, refrigerators, gas station pumps, whole IoT and other strange things connected to the Internet. It’s like running [nmap](https://nmap.org/) and doing active reconnaissance for the entire Internet. Thanks to Shodan we can check the information on the stage of intelligence gathering ([OSINT](https://en.wikipedia.org/wiki/Open-source_intelligence)), leave no traces of our intelligence, without arousing the suspicion of our target.
 
 ## Basic Shodan Queries
 
@@ -22,7 +22,7 @@ Google indexes pages and materials hosted on www servers. Shodan indexes all dev
 
 **before/after:** - Find devices before or after between a given time. Example: apache **after:**01/01/2010 **before:**01/09/2010
 
-Of course there is more and you can also combine this queries to make better results. Check official [documentation](https://help.shodan.io/the-basics/search-query-fundamentals) and [guide](https://leanpub.com/shodan).
+Of course there is more and you can also combine this queries to make better results. Check official [documentation](https://help.shodan.io/the-basics/search-query-fundamentals).
 
 ## Examples
 
@@ -40,7 +40,6 @@ https://www.shodan.io/search?query=%22Docker+Containers%3A%22+port%3A2375
 https://www.shodan.io/search?query=%22MongoDB+Server+Information%22+port%3A27017+-authentication
 https://www.shodan.io/search?query=Microsoft-IIS/6.0 – CVE-2017-7269 (https://github.com/edwardz246003/IIS_exploit)
 https://www.shodan.io/search?query=’Microsoft-IIS/7.5′ ‘It works!’ -‘Content-Type’ -‘Set-Cookie’ – Hunting Red Team Empire C2 Infrastructure
-https://www.shodan.io/search?query=Hipcam RealServer/V1.0
 https://www.shodan.io/search?query=”Active Management Technology”
 https://www.shodan.io/search?query=”Standard Manageability” – CVE-2017-5689
 https://www.shodan.io/search?query=GoAhead 5ccc069c403ebaf9f0171e9517f40e41 – CVE-2017-8221,CVE-2017-8222,CVE-2017-8223,CVE-2017-8224,CVE-2017-8225
@@ -110,7 +109,13 @@ Here is Shodan dork list with some other examples ready to use.
 
 **Tesla Powerpack charging Status** - Helps to find the charging status of tesla powerpack. Example: `http.title:"Tesla PowerPack System" http.component:"d3" -ga3ca4f2`
 
-If you have any interesting please let me know in the comments, I will add them to the list.
+You can also check this repo for more
+
+> https://github.com/litt1eb0yy/Awesome-Dorks/blob/master/Shodan-dorks.txt
+>
+> https://github.com/JavierOlmedo/shodan-filters
+>
+> https://github.com/jakejarvis/awesome-shodan-queries
 
 ## Shodan Command-Line Interface
 
@@ -130,134 +135,21 @@ shodan search --fields ip_str,port,org,hostnames microsoft iis 6.0
 
 ## Automation
 
-Of course, there are tons of interesting programs and scripts that use Shodan database. Here are a few that I like and find useful. All these tools use [Shodan API](https://developer.shodan.io/) which should be configured in each tool before run. Some of the functions are limited in free Shodan version. It is worth to register and buy full account. Every Black Friday there is always big discount for this (I bought mine lifetime account for 5$!)
+Of course, there are tons of interesting programs and scripts that use Shodan database. Here are a few that I like and find useful. All these tools use [Shodan API](https://developer.shodan.io/) which should be configured in each tool before run. Some of the functions are limited in free Shodan version. It is worth to register and buy full account. Every Black Friday there is always big discount for this.
 
-### shodansploit
-
-With Shodan Exploit, you will have all your calls on your terminal. It also allows you to make detailed searches. All you have to do without running Shodansploiti is to add shodan api.
-
-```
-python shodansploit.py
-
-[1] GET > /shodan/host/{ip} 
-[2] GET > /shodan/host/count
-[3] GET > /shodan/host/search 
-[4] GET > /shodan/host/search/tokens 
-[5] GET > /shodan/ports 
-[6] GET > /shodan/exploit/author
-[7] GET > /shodan/exploit/cve
-[8] GET > /shodan/exploit/msb
-[9] GET > /shodan/exploit/bugtraq-id
-[10] GET > /shodan/exploit/osvdb
-[11] GET > /shodan/exploit/title
-[12] GET > /shodan/exploit/description
-[13] GET > /shodan/exploit/date
-[14] GET > /shodan/exploit/code
-[15] GET > /shodan/exploit/platform
-[16] GET > /shodan/exploit/port
-[17] GET > /dns/resolve
-[18] GET > /dns/reverse 
-[19] GET > /labs/honeyscore/{ip}
-[20] GET > /account/profile 
-[21] GET > /tools/myip 
-[22] GET > /tools/httpheaders
-[23] GET > /api-info 
-[24] Exit
-```
-
-**GitHub**: https://github.com/shodansploit/shodansploit
-
-### theHarvester
-
-theHarvester is a very simple to use, yet powerful and effective tool designed to be used in the early stages of a
-penetration test or red team engagement. Use it for open source intelligence ([OSINT](https://en.wikipedia.org/wiki/Open-source_intelligence)) gathering to help determine a
-company’s external threat landscape on the internet. The tool gathers emails, names, subdomains, IPs and URLs using
-multiple public data sources that include also Shodan.
-
-```
-sage: __main__.py [-h] -d DOMAIN [-l LIMIT] [-S START] [-g] [-p] [-s] [-v] [-e DNS_SERVER] [-t DNS_TLD] [-n] [-c] [-f FILENAME] [-b SOURCE]
-
-theHarvester is used to gather open source intelligence (OSINT) on a company or domain.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -d DOMAIN, --domain DOMAIN
-                        company name or domain to search
-  -l LIMIT, --limit LIMIT
-                        limit the number of search results, default=500
-  -S START, --start START
-                        start with result number X, default=0
-  -g, --google-dork     use Google Dorks for Google search
-  -p, --port-scan       scan the detected hosts and check for Takeovers (21,22,80,443,8080)
-  -s, --shodan          use Shodan to query discovered hosts
-  -v, --virtual-host    verify host name via DNS resolution and search for virtual hosts
-  -e DNS_SERVER, --dns-server DNS_SERVER
-                        DNS server to use for lookup
-  -t DNS_TLD, --dns-tld DNS_TLD
-                        perform a DNS TLD expansion discovery, default False
-  -n, --dns-lookup      enable DNS server lookup, default False
-  -c, --dns-brute       perform a DNS brute force on the domain
-  -f FILENAME, --filename FILENAME
-                        save the results to an HTML and/or XML file                                                                                       
-  -b SOURCE, --source SOURCE                                                                                                                              
-                        baidu, bing, bingapi, certspotter, crtsh, dnsdumpster, dogpile, duckduckgo, github-code, google, hunter, intelx, linkedin,        
-                        linkedin_links, netcraft, otx, securityTrails, spyse(disabled for now), threatcrowd, trello, twitter, vhost, virustotal, yahoo,   
-                        all
-```
-
-`-s` parameter is for Shodan
-
-**GitHub**: https://github.com/laramies/theHarvester
-
-### ReconDog
-
-Reconnaissance Swiss Army Knife - it is frontend for many tools, to get results in one place. Wizard + CLA interface (Command Line Argument interface). Can extracts targets from STDIN (piped input) and act upon them. All the information is extracted with APIs, no direct contact is made to the target.
-
-Detect honeypot option uses shodan.io to check if target is a honeypot
-
-```
-hoek@bughunter:/opt/ReconDog$ python dog                                                                     
- _____                         ____                                                                         
-| __  |___ ___ ___ ___  |\_/| |    \ ___ ___
-|    -| -_|  _| . |   | |. .| |  |  | . | . |
-|__|__|___|___|___|_|_|  \_/  |____/|___|_  |
-                                        |___| v2.0
-1. Censys
-2. NS lookup
-3. Port scan
-4. Detect CMS
-5. Whois lookup
-6. Detect honeypot
-7. Find subdomains
-8. Reverse IP lookup
-9. Detect technologies
-0. All
->>
-```
-
-**GitHub**: https://github.com/s0md3v/ReconDog
-
-### GoLismero
-
-GoLismero is an open source framework for security testing. It’s currently geared towards web security, but it can easily be expanded to other kinds of scans. This is huge tool and one of the source it gets information is Shodan.
-
-```
-python2 /opt/golismero/golismero.py scan <target_IP> -o <output file name>
-```
-
-and with nice html output:
-
-```
-sudo python2 golismero.py scan https://example.com -o - -o report.html
-```
-
-**GitHub**: https://github.com/golismero/golismero
-
-## This is the end
-
-Yep, that’s all I have about Shodan. Mostly I use it for reconnaissance or when I want to look at someone’s backyard, shop, office or parrot cage at the camera view ;)
-
-Check other [device search engines](https://0ut3r.space/2018/11/20/devices-search/).
+> https://github.com/random-robbie/My-Shodan-Scripts
+>
+> https://github.com/HatBashBR/ShodanHat
+>
+> https://github.com/BullsEye0/shodan-eye
+>
+> https://github.com/shodansploit/shodansploit
+>
+> https://github.com/n0x08/ShodanTools
+>
+> https://github.com/woj-ciech/Kamerka-GUI
+>
+> https://github.com/Dheerajmadhukar/karma_v2
 
 ### Bonus - IP Cameras Default Passwords Directory
 
