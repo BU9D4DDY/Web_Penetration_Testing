@@ -1,6 +1,6 @@
 > subdomain enumeration
 
-![img](../../_resources/ration (2).png)
+![img](../../_resources/ration(2).png)
 
 (1) **Horizontal Enumeration** :
 
@@ -69,7 +69,7 @@
      echo 17.0.0.0/8 | mapcidr -silent | dnsx -ptr -resp-only -o output.txt
     ```
 
-    ![img](../../_resources/\ptr.png)
+    ![img](../../_resources/ptr.png)
 
     > **Note:** We can also combine the step of discovering the IP space with reverse DNS lookup into one-liner like:
     >
@@ -429,7 +429,7 @@ This includes various intensive techniques which we will see further in this gui
 
     - running the subdomain enumeration tools again on each of the subdomains found yields in getting more subdomains in total
 
-    ![img](../../_resources/Recursive Enumeration.png)
+    ![img](../../_resources/RecursiveEnumeration.png)
 
     - The Point to note here is that if you are using some paid API keys from passive sources this single script and eat-up all your quota. So just be aware of what are you performing.
 
