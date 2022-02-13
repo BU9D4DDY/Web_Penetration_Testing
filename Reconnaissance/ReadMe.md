@@ -180,6 +180,10 @@ Several applications can automate this process. [Wappalyzer](https://www.wappaly
 
 ![image-20211208201322393](../_resources/image-20211208201322393.png)
 
+> Here You Can Find Almost All The Tools Used For Recon:
+>
+> https://github.com/BU9D4DDY/Web_Penetration_Testing/blob/main/Reconnaissance/AllTools.md
+
 ### **DNS Discovery**
 
 | Name                | Link                                            |
