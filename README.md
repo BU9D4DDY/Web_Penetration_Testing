@@ -62,3 +62,5 @@ In a double blind test, security personnel have no prior knowledge of the simula
 **Targeted testing**
 
 In this scenario, both the tester and security personnel work together and keep each other appraised of their movements. This is a valuable training exercise that provides a security team with real-time feedback from a hacker’s point of view.
+
+>  **Reminder:** *Attacking systems you do not have permission to attack is illegal. Only perform attacks on machines and networks you own or have permission for.*

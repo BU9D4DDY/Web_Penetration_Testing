@@ -64,6 +64,8 @@ Finally, you can also combine search terms for a more accurate search. For examp
 >
 > https://github.com/m3n0sd0n4ld/uDork
 >
+> https://github.com/TebbaaX/GRecon
+>
 > https://github.com/BullsEye0/dorks-eye
 >
 > https://github.com/TebbaaX/Katana

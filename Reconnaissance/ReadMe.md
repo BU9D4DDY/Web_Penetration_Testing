@@ -1,6 +1,6 @@
 The first step to attacking any target is conducting reconnaissance, or simply put, gathering information about the target.  
 
-If an application doesn’t use PHP, for instance, there’s no reason to test it for PHP vulnerabilities, and if the organization doesn’t use Amazon Web Services (AWS), you shouldn’t waste time trying to crack its buckets. By understanding how a target works, you can set up a solid foundation for finding vulnerabilities. Recon skills are what separate a good hacker from an ineffective one.  
+If an application doesn’t use PHP, for instance, there’s no reason to test it for PHP vulnerabilities, and if the organization doesn’t use Amazon Web Services (AWS), you shouldn’t waste time trying to crack its buckets. By understanding how a target works, you can set up a solid foundation for finding vulnerabilities. **Recon skills are what separate a good hacker from an ineffective one.**  
 
 #### Manually Walking Through the Target 
 
@@ -12,15 +12,10 @@ Sign up for an account at every privilege level to reveal all of the application
 
 This should give you a rough idea of what the attack surface (all of the different points at which an attacker can attempt to exploit the application) looks like, where the data entry points are, and how different users interact with each other. Then you can start a more in-depth recon process: finding out the technology and structure of an application.  
 
-#### [Google Dorking](https://github.com/BU9D4DDY/Web_Penetration_Testing/blob/main/Reconnaissance/Dorking/Google%20Dorking.md)
-
-advanced Google searches are a powerful technique that hackers often use to perform recon.  
-You Can Check It [Here](https://github.com/BU9D4DDY/Web_Penetration_Testing/blob/main/Reconnaissance/Dorking/Google%20Dorking.md)  
-
 #### Scope Discovery  
 
 Let’s now dive into recon itself. First, always verify the target’s scope. A program’s scope on its policy page specifies which subdomains, products, and applications you’re allowed to attack. Carefully verify which of the company’s assets are in scope to avoid overstepping boundaries during the recon
-and hacking process.   
+and hacking process.  
 
 ###### WHOIS and Reverse WHOIS  
 
@@ -44,7 +39,7 @@ Also run the whois command on an IP address, and then see if the target has a de
 
 Another way of finding IP addresses in scope is by looking at autonomous systems, which are routable networks within the public internet. Autonomous system numbers (ASNs) identify the owners of these networks. By checking if two IP addresses share an ASN, you can determine whether the IPs belong to the same owner  
 
-To figure out if a company owns a dedicated IP range, run several IP-toASN translations to see if the IP addresses map to a single ASN. If many addresses within a range belong to the same ASN, the organization might have a dedicated IP range. From the following output, we can deduce that any IP within the 157.240.2.21 to 157.240.2.34 range probably belongs to Facebook:  
+To figure out if a company owns a dedicated IP range, run several IP-to-ASN translations to see if the IP addresses map to a single ASN. If many addresses within a range belong to the same ASN, the organization might have a dedicated IP range. From the following output, we can deduce that any IP within the 157.240.2.21 to 157.240.2.34 range probably belongs to Facebook:  
 
 ![image-20211208153247097](../_resources/image-20211208153247097.png)
 
@@ -54,7 +49,7 @@ The `-h` flag in the whois command **sets the WHOIS server to retrieve informati
 
 Another way of finding hosts is to take advantage of the Secure Sockets Layer (SSL) certificates used to encrypt web traffic. An SSL certificate’s Subject Alternative Name field lets certificate owners specify additional hostnames that use the same certificate, so you can find those hostnames by parsing this field. Use online databases like `crt.sh, Censys, and Cert Spotter` to find certificates for a domain.  
 
-For example, by running a certificate search using crt.sh for facebook.com, we can find Facebook’s SSL certificate. You’ll see that that many other domain names belonging to Facebook are listed:  
+For example, by running a certificate search using crt.sh for facebook.com, we can find Facebook’s SSL certificate. You’ll see that many other domain names belonging to Facebook are listed:  
 
 ![image-20211208153643052](../_resources/image-20211208153643052.png)
 
@@ -68,18 +63,7 @@ Tools like `Sublist3r, SubBrute, Amass, and Gobuster` can enumerate subdomains a
 
 You can build a tool that combines the results of multiple tools to achieve the best results.  
 
-To use many subdomain enumeration tools, you need to feed the program a wordlist of terms likely to appear in subdomains. You can find some good wordlists made by other hackers online. Daniel Miessler’s SecLists at https://github.com/danielmiessler/SecLists/ is a pretty extensive one. You can also
-use a wordlist generation tool like [Commonspeak2](https://github.com/assetnote/commonspeak2/) to generate wordlists based on the most current internet data.  
-
-Finally, you can combine several wordlists found online or that you generated yourself for the most comprehensive results. Here’s a simple command to remove duplicate items from a set of two wordlists: `$ sort -u wordlist1.txt wordlist2.txt` The sort command line tool sorts the lines of text files. When given multiple files, it will sort all files and write the output to the terminal. The `-u` option tells sort to return only unique items in the sorted list.   
-
-Gobuster is a tool for brute-forcing to discover subdomains, directories, and files on target web servers. Its DNS mode is used for subdomain bruteforcing. In this mode, you can use the flag `-d` to specify the domain you want to brute-force and `-w` to specify the wordlist you want to use: `gobuster dns -d target_domain -w wordlist`  
-
-Once you’ve found a good number of subdomains, you can discover more by identifying patterns. For example, if you find two subdomains of example.com named 1.example.com and 3.example.com, you can guess that 2.example.com is probably also a valid subdomain. A good tool for automating this process is [Altdns](https://github.com/infosec-au/altdns/), which discovers subdomains with names that are permutations of other subdomain names.  
-
-In addition, you can find more subdomains based on your knowledge about the company’s technology stack. For example, if you’ve already learned that example.com uses Jenkins, you can check if jenkins.example.com is a valid subdomain.  
-
-Also look for subdomains of subdomains. After you’ve found, say, dev.example.com, you might find subdomains like 1.dev.example.com. You can find subdomains of subdomains by running enumeration tools recursively: add the results of your first run to your Known Domains list and run the tool again.  
+Here is a detailed resource for subdomain enumeration.
 
 ###### Service Enumeration  
 
@@ -91,24 +75,23 @@ For example, this simple Nmap command reveals the open ports on scanme.nmap.org:
 ![image-20211208155158030](../_resources/image-20211208155158030.png)
 
 On the other hand, in passive scanning, you use third-party resources to learn about a machine’s ports without interacting with the server. Passive scanning is stealthier and helps attackers avoid detection. To find services on a machine without actively scanning it, you can use `Shodan`, a search engine that lets the user find machines connected to the internet.  
+Check [Here](https://github.com/BU9D4DDY/Web_Penetration_Testing/blob/main/Reconnaissance/Dorking/Shodan%20Dorking.md)
 
 With Shodan, you can discover the presence of webcams, web servers, or even power plants based on criteria such as hostnames or IP addresses. For example, if you run a Shodan search on scanme.nmap.org’s IP address, 45.33.32.156, you get the result   
 
 ![image-20211208155430410](../_resources/image-20211208155430410.png)
 
-You can see that the search yields different data than our port scan, and provides additional information about the server.  
-
-Alternatives to `Shodan` include `Censys` and `Project Sonar`. Combine the information you gather from different databases for the best results. With these databases, you might also find your target’s IP addresses, certificates, and software versions.               
+You can see that the search yields different data than our port scan, and provides additional information about the server.     
 
 ###### Directory Brute-Forcing  
 
 The next thing you can do to discover more of the site’s attack surface is brute-force the directories of the web servers you’ve found. Finding directories on servers is valuable, because through them, you might discover hidden admin panels, configuration files, password files, outdated functionalities, database copies, and source code files.   
 
-Directory brute-forcing can sometimes allow you to directly take over a server!  
+**Directory brute-forcing can sometimes allow you to directly take over a server!**  
 
 Even if you can’t find any immediate exploits, directory information often tells you about the structure and technology of an application. For example, a pathname that includes phpmyadmin usually means that the application is built with PHP.  
 
-You can use `Dirsearch` or` Gobuster` for directory brute-forcing. These tools use wordlists to construct URLs, and then request these URLs from a web server. If the server responds with a status code in the `200 `range, the directory or file exists. This means you can browse to the page and see what  the application is hosting there. A status code of `404 `means that the directory or file doesn’t exist, while `403 `means it exists but is protected. Examine `403 `pages carefully to see if you can bypass the protection to access the content.  
+You can use `Dirsearch` or` Gobuster` for directory brute-forcing. These tools use wordlists to construct URLs, and then request these URLs from a web server. If the server responds with a status code in the `200 `range, the directory or file exists. This means you can browse to the page and see what  the application is hosting there. A status code of `404 `means that the directory or file doesn’t exist, while `403 `means it exists but is protected. **Examine `403 `pages carefully to see if you can bypass the protection to access the content.**  
 
 Here’s an example of running a Dirsearch command. The `-u `flag specifies the hostname, and the `-e` flag specifies the file extension to use when constructing URLs:  
 
@@ -133,25 +116,17 @@ Burp Suite has an equivalent tool called the crawler, but I prefer ZAP’s spide
 
 ![image-20211208165233818](../_resources/image-20211208165233818.png)![image-20211208165250140](../_resources/image-20211208165250140.png)
 
-Finally, you can try to brute-force buckets by using keywords. Lazys3(https://github.com/nahamsec/lazys3/) is a tool that helps you do this. It relies on a wordlist to guess buckets that are permutations of common bucket names.  
+Finally, you can try to brute-force buckets by using keywords. [Lazys3](https://github.com/nahamsec/lazys3/) is a tool that helps you do this. It relies on a wordlist to guess buckets that are permutations of common bucket names.  
 
 ![image-20211208165427112](../_resources/image-20211208165427112.png)![image-20211208165931398](../_resources/image-20211208165931398.png)
 
 ###### GitHub Recon
 
-Search an organization’s GitHub repositories for sensitive data that has been accidentally committed, or information that could lead to the discovery of a vulnerability.  
-
-Start by finding the GitHub usernames relevant to your target. You should be able to locate these by searching the organization’s name or  product names via GitHub’s search bar, or by checking the GitHub accounts of known employees.  
-
-When you’ve found usernames to audit, visit their pages. Find repositories related to the projects you’re testing and record them, along with the usernames of the organization’s top contributors, which can help you find more relevant repositories.  
-
-Then dive into the code. For each repository, pay special attention to the Issues and Commits sections. These sections are full of potential info leaks: they could point attackers to unresolved bugs, problematic code, and the most recent code fixes and security patches.  
+For each repository, pay special attention to the Issues and Commits sections. These sections are full of potential info leaks: they could point attackers to unresolved bugs, problematic code, and the most recent code fixes and security patches.  
 
 Recent code changes that haven’t stood the test of time are more likely to contain bugs. Look at any protection mechanisms implemented to see if you can bypass them.  You can also search the Code section for potentially vulnerable code snippets.   
 
-Once you’ve found a file of interest, check the Blame and History sections at the top-right corner of the file’s page to see how it was developed  ![image-20211208170434867](../_resources/image-20211208170434867.png)
-
-look for hardcoded secrets such as API keys, encryption keys, and database passwords. Search the organization’s repositories for terms like key, secret, and password to locate hardcoded user credentials that you can use to access internal systems. After you’ve found leaked credentials, you can use KeyHacks (https://github.com/streaak/keyhacks/) to check if the credentials are valid and learn how to use them to access the target’s services.  
+look for hardcoded secrets such as API keys, encryption keys, and database passwords. Search the organization’s repositories for terms like key, secret, and password to locate hardcoded user credentials that you can use to access internal systems. After you’ve found leaked credentials, you can use [KeyHacks](https://github.com/streaak/keyhacks/) to check if the credentials are valid and learn how to use them to access the target’s services.  
 
 You should also search for sensitive functionalities in the project. See if any of the source code deals with important functions such as authentication, password reset, state changing actions, or private info reads. Pay attention to code that deals with user input, such as HTTP request parameters, HTTP headers, HTTP request paths, database entries, file reads, and file uploads, because they provide potential entry points for attackers to exploit the application’s vulnerabilities.  
 
@@ -159,7 +134,12 @@ Look for any configuration files, as they allow you to gather more information a
 
 Outdated dependencies and the unchecked use of dangerous functions are also a huge source of bugs. Pay attention to dependencies and imports being used and go through the versions list to see if they’re outdated. Record any outdated dependencies. You can use this information later to look for publicly disclosed vulnerabilities that would work on your target.  
 
-Tools like Gitrob and TruffleHog can automate the GitHub recon process. Gitrob (https://github.com/michenriksen/gitrob/) locates potentially sensitive files pushed to public repositories on GitHub. TruffleHog (https://github.com/trufflesecurity/truffleHog/) specializes in finding secrets in repositories by conducting regex searches and scanning for high-entropy strings.  
+You can check all about GitHub Recon [HERE](https://github.com/BU9D4DDY/Web_Penetration_Testing/blob/main/Reconnaissance/Dorking/Github%20Recon.md)
+
+#### [Google Dorking](https://github.com/BU9D4DDY/Web_Penetration_Testing/blob/main/Reconnaissance/Dorking/Google%20Dorking.md)
+
+advanced Google searches are a powerful technique that hackers often use to perform recon.  
+You Can Check It [Here](https://github.com/BU9D4DDY/Web_Penetration_Testing/blob/main/Reconnaissance/Dorking/Google%20Dorking.md)  
 
 #### Other Sneaky OSINT Techniques
 
@@ -171,12 +151,12 @@ If you can’t find relevant job posts, search for employees’ profiles on Link
 Another source of information is the employees’ Google calendars. People’s work calendars often contain meeting notes, slides, and sometimes even login credentials. If an employee shares their calendars with the public by accident, you could gain access to these.  
 
 The organization or its employees’ social media pages might also leak valuable information.  
-For example, hackers have actually discovered sets of valid credentials on Post-it Notes visible in the background of office selfies!  
+**For example, hackers have actually discovered sets of valid credentials on Post-it Notes visible in the background of office selfies!**  
 
 If the company has an engineering mailing list, sign up for it to gain insight into the company’s technology and development process .
 
 Also check the company’s SlideShare or Pastebin accounts. Sometimes, when organizations present at conferences or have internal meetings, they upload slides to SlideShare for reference. You might be able to find information about the
-technology stack and security challenges faced by the company. Pastebin (https://pastebin.com/) is a website for pasting and storing text online for a short time. People use it to share text across machines or with others. Engineers sometimes use it to share source code or server logs with their colleagues for viewing or collaboration, so it could be a great source of information. You might also find uploaded credentials and development comments. Go to Pastebin, search for the target’s organization name, and see what happens! You can also use automated tools like PasteHunter (https://github.com/kevthehermit/PasteHunter/) to scan for publicly pasted data.    
+technology stack and security challenges faced by the company. Pastebin (https://pastebin.com/) is a website for pasting and storing text online for a short time. People use it to share text across machines or with others. Engineers sometimes use it to share source code or server logs with their colleagues for viewing or collaboration, so it could be a great source of information. You might also find uploaded credentials and development comments. Go to Pastebin, search for the target’s organization name, and see what happens! You can also use automated tools like [PasteHunter](https://github.com/kevthehermit/PasteHunter/) to scan for publicly pasted data.    
 
 Lastly, consult archive websites like the Wayback Machine (https://archive.org/web/), a digital record of internet content . It records a site’s content at various points in time. Using the Wayback Machine, you can find old endpoints, directory listings, forgotten subdomains, URLs, and files that are outdated but still in use. Tomnomnom’s tool Waybackurls (https://github.com/tomnomnom/waybackurls/) can automatically extract endpoints and URLs from the Wayback Machine.  ![image-20211208175115837](../_resources/image-20211208175115837.png)
 
@@ -196,7 +176,7 @@ Also, certain headers are used only by specific technologies. For example, only 
 The HTML source code of web pages can also provide clues. Many web frameworks or other technologies will embed a signature in source code.
 **Right-click** a page, select **View Source Code**, and press **CTRL-F** to search for phrases like powered by, built with, and running. For instance, you might find Powered by: WordPress 3.3.2 written in the source.  
 
-Several applications can automate this process. Wappalyzer (https://www.wappalyzer.com/) is a browser extension that identifies content management systems, frameworks, and programming languages used on a site. BuiltWith (https://builtwith.com/) is a website that shows you which web technologies a site is built with. StackShare (https://stackshare.io/) is an online platform that allows developers to share the tech they use. You can use it to find out if the organization’s developers have posted their tech stack. Finally, **Retire.js** is a tool that detects outdated JavaScript libraries and Node.js packages. You can use it to check for outdated technologies on a site.  
+Several applications can automate this process. [Wappalyzer](https://www.wappalyzer.com/) is a browser extension that identifies content management systems, frameworks, and programming languages used on a site. [BuiltWith](https://builtwith.com/) is a website that shows you which web technologies a site is built with. [StackShare](https://stackshare.io/) is an online platform that allows developers to share the tech they use. You can use it to find out if the organization’s developers have posted their tech stack. Finally, **Retire.js** is a tool that detects outdated JavaScript libraries and Node.js packages. You can use it to check for outdated technologies on a site.  
 
 ![image-20211208201322393](../_resources/image-20211208201322393.png)
 
