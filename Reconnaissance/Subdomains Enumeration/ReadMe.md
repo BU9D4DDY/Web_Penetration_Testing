@@ -880,3 +880,4 @@ cat unimap_commonweb.txt | httpx -random-agent -status-code -silent -retries 2 -
 
 - That's it, we have got those hidden web applications running on common ports. Go ahead! and hunt on them. 🐞
 
+and also here are some online tools that can help [dnsdumpster](https://dnsdumpster.com/), [nmmapper](https://www.nmmapper.com/sys/tools/subdomainfinder/), [Spyse](https://spyse.com/), [Url Fuzzer](https://pentest-tools.com/website-vulnerability-scanning/discover-hidden-directories-and-files)

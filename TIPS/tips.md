@@ -262,6 +262,14 @@ cat alive-subdomains.txt | parallel -j50 -q curl -w 'Status:%{http_code}\t  Size
     ```bash
     python webscreenshot.py -i list.txt -w 40
     ```
+    
+- Subdomains to Burp Suite
+
+    Export subdmains from file to Burp suite by [@tvmpt](https://twitter.com/tvmpt)
+
+    ```bash
+    cat <file-name> | parallel -j 200 curl -L -o /dev/null {} -x 127.0.0.1:8080 -k -s
+    ```
 
 ### SQL Injection
 
@@ -514,3 +522,18 @@ cat alive-subdomains.txt | parallel -j50 -q curl -w 'Status:%{http_code}\t  Size
     ```
 
     > https://pastebin.com/raw/yY9xQ6sf
+    
+- Subdomains to Burp Suite
+
+    Export subdmains from file to Burp suite by [@tvmpt](https://twitter.com/tvmpt)
+
+    ```bash
+    cat <file-name> | parallel -j 200 curl -L -o /dev/null {} -x 127.0.0.1:8080 -k -s
+    ```
+
+    
+
+
+
+
+

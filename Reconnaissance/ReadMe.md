@@ -59,7 +59,9 @@ The [crt.sh](https://crt.sh/) website also has a useful utility that lets you re
 
 After finding as many domains on the target as possible, locate as many subdomains on those domains as you can. Each subdomain represents a new angle for attacking the network. The best way to enumerate subdomains is to use automation.  
 
-Tools like `Sublist3r, SubBrute, Amass, and Gobuster` can enumerate subdomains automatically with a variety of wordlists and strategies.   
+Tools like `Sublist3r, SubBrute, Amass, and Gobuster` can enumerate subdomains automatically with a variety of wordlists and strategies.  
+
+and also here are some online tools that can help [dnsdumpster](https://dnsdumpster.com/), [nmmapper](https://www.nmmapper.com/sys/tools/subdomainfinder/), [Spyse](https://spyse.com/), [Url Fuzzer](https://pentest-tools.com/website-vulnerability-scanning/discover-hidden-directories-and-files)
 
 You can build a tool that combines the results of multiple tools to achieve the best results.  
 

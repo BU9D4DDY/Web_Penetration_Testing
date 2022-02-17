@@ -8,7 +8,7 @@ wafw00f URL
 
 For example:
 
-```
+```bash
 wafw00f wise.com
 ```
 
@@ -20,7 +20,7 @@ wafw00f wise.com
 
 An example of a web application firewall scan:
 
-```
+```bash
 python3 identYwaf.py admitad.com
 ```
 
@@ -30,7 +30,7 @@ python3 identYwaf.py admitad.com
 
 For example:
 
-```
+```bash
 python3 .``/whatwaf` `-u https:``//ebay``.com
 ```
 

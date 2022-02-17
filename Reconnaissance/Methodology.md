@@ -1,3 +1,6 @@
+> Here is a good methodology to go through
+> [part1](https://eforensicsmag.com/automation-of-the-reconnaissance-phase-during-web-application-penetration-testing-i-by-karol-mazurek/), [part2](https://eforensicsmag.com/automation-of-the-reconnaissance-phase-during-web-application-penetration-testing-ii-by-karol-mazurek/), [part3](https://eforensicsmag.com/automation-of-the-reconnaissance-phase-during-web-application-penetration-testing-iii-by-karol-mazurek/) 
+
 - [ ] Verify the target’s **scope**
 
 - [ ] Manually Walking Through the Target.
