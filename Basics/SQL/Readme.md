@@ -624,3 +624,5 @@ WHERE employee_info.employeeid = employee_sales.employeeid;
 ```
 
 This statement will select the employeeid, lastname (from the employee_info table), and the comission value (from the employee_sales table) for all of the rows where the employeeid in the employee_info table matches the employeeid in the employee_sales table.
+
+Great Thanks To The Owners Of This [Website](https://www.sqlcourse.com/).
