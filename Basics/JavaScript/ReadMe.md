@@ -1,8 +1,3 @@
-https://dev.to/nehasoni__/introduction-to-javascript-basics-g6n
+![JavaScript Wallpapers - Top Free JavaScript Backgrounds - WallpaperAccess](../../_resources/1555172.jpg)
 
 http://bonsaiden.github.io/JavaScript-Garden/
-
-https://eloquentjavascript.net/index.html
-
-https://javascript.info/
-
