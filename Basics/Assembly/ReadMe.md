@@ -1,2 +1,2 @@
-## CALM DOWN: IT’S JUST ASSEMBLY ! ![86](../../_resources/86.png)
+## CALM DOWN: IT’S JUST ASSEMBLY ! <img src="../../_resources/86.png" alt="86" style="zoom:50%;" />
 
