@@ -1,7 +1,29 @@
-https://shahjerry33.medium.com/recon-my-way-or-high-way-58a18dab5c95
+#### vulnerabilities
 
-https://shahjerry33.medium.com/recon-my-way-or-high-way-58a18dab5c95
+- SQLi
+- information disclosure
+- Directory Traversal
+- XSS
+- CSRF
+- Clickjacking
+- Sub-TakeOver
 
-https://dhiyaneshgeek.github.io/bug/bounty/2020/02/06/recon-with-me/
+#### Resources
 
-https://dhiyaneshgeek.github.io/web/security/2021/07/19/hack-with-automation/
+- https://portswigger.net/
+- https://tryhackme.com/
+- https://pentesterlab.com/
+- https://www.hacksplaining.com/lessons
+- https://www.youtube.com/playlist?list=PLuyTk2_mYISLaZC4fVqDuW_hOk0dd5rlf
+
+- https://book.hacktricks.xyz/
+
+- https://pentestbook.six2dez.com/
+
+- https://sidxparab.gitbook.io/subdomain-enumeration-guide/
+
+- https://www.youtube.com/playlist?list=PLDRMxi70CdSBHODkNy87kqqGUSnl0ASxg
+
+- https://www.youtube.com/playlist?list=PLv7cogHXoVhXvHPzIl1dWtBiYUAL8baHj
+
+    

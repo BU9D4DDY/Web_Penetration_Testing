@@ -70,7 +70,7 @@ You should be looking for URLs, API keys, usernames, passwords etc. It might be 
 "Org_name" password
 "org_name" key
 "org_name" api
-"org_name" “filename:vim_settings.xml”
+"org_name" "filename:vim_settings.xml"
 "org_name" "Authorization: Bearer"
 "org_name" "Language: PHP"
 "Company name" send_keys or sendkeys

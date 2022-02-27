@@ -39,6 +39,8 @@ http://securityidiots.com/Web-Pentest/SQL-Injection/0
 
 SQL Injection tool that can spawn a meterpreter or VNC session back to attacker. Can return a decent number of false positives. Always verify. If you do not specify a value, SQLmap will attempt all by default
 
+- http://www.it-docs.net/ddata/4956.pdf
+
 - [SQLMate](https://github.com/s0md3v/sqlmate) - Companion tool for SQLMap
     -  Maps out and locates admin panel
     - Query dorking for finding targets
