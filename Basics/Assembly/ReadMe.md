@@ -8,6 +8,15 @@ This guide describes the basics of 32-bit x86 assembly language programming, cov
 
 The prerequisites to reading this article are working with binary numbers, moderate experience programming in an imperative language (C/C++/Java/Python/etc.), and the concept of memory pointers (C/C++). You do not need to know how CPUs work internally or have prior exposure to assembly language.
 
+**Who Needs to Learn Assembly language :**
+-> Malware Analysts.
+-> Code Exploit Writers.
+-> Reverse Code Engineers.
+-> Shellcoders.
+-> Software Vulnerability Analysts.
+-> Bug Hunters.
+-> Virus Writers.
+
 >  Is it the Same On Windows/DOS/Linux?
 
 The answers to this question are yes and no. The basic x86 machine code is dependent only on the processor. The x86 versions of Windows and Linux are obviously built on the x86 machine code. There are a few differences between Linux and Windows programming in x86 Assembly:
@@ -535,3 +544,48 @@ call <label>
 ret
 ```
 
+**`INT`** - the INT command generates a call to an interrupt handler
+
+> [**The list of all interrupts that are currently supported by the emulator.**](https://jbwyatt.com/253/emu/8086_bios_and_dos_interrupts.html)
+
+---
+
+---
+
+---
+
+https://jbwyatt.com/253/emu/
+
+https://jbwyatt.com/253/emu/tutorials.html
+
+https://jbwyatt.com/253/emu/8086_instruction_set.html
+
+https://jbwyatt.com/cis253.html
+
+https://sensepost.com/blogstatic/2014/01/SensePost_crash_course_in_x86_assembly-.pdf
+
+https://trailofbits.github.io/ctf/vulnerabilities/references/X86_Win32_Reverse_Engineering_Cheat_Sheet.pdf
+
+https://www.bencode.net/blob/nasmcheatsheet.pdf
+
+https://asmtutor.com/
+
+https://www.youtube.com/watch?v=Wz_xJPN7lAY&ab_channel=Creel
+
+https://www.youtube.com/playlist?list=PL6brsSrstzga43kcZRn6nbSi_GeXoZQhR
+
+https://www.youtube.com/watch?v=KrksBdWcZgQ&ab_channel=BlackHat
+
+https://www.youtube.com/watch?v=HgEGAaYdABA&ab_channel=JohnHammond
+
+R ---
+
+http://www.cs.virginia.edu/~evans/cs216/guides/x86.html
+
+https://www.nayuki.io/page/a-fundamental-introduction-to-x86-assembly-programming
+
+https://www.nayuki.io/category/x86
+
+https://en.wikibooks.org/wiki/X86_Assembly/Print_Version
+
+https://github.com/Ahmad-Zaklouta/Assembly_emu8086
