@@ -466,3 +466,72 @@ shr ebx, cl — Store in EBX the floor of result of dividing the value of EBX by
 ```
 
 ### Control Flow Instructions
+
+The x86 processor maintains an instruction pointer (IP) register that is a 32-bit value indicating the location in memory where the current instruction starts. Normally, it increments to point to the next instruction in memory begins after execution an instruction. The IP register cannot be manipulated directly, but is updated implicitly by provided control flow instructions.
+
+We use the notation <label> to refer to labeled locations in the program text. Labels can be inserted anywhere in x86 assembly code text by entering a label name followed by a colon. For example:
+```assembly
+       mov esi, [ebp+8]
+begin: xor ecx, ecx
+       mov eax, [esi]
+```
+
+The second instruction in this code fragment is labeled **begin**. Elsewhere in the code, we can refer to the memory location that this instruction is located at in memory using the more convenient symbolic name begin. This label is just a convenient way of expressing the location instead of its 32-bit value.
+
+**`jmp`** — Jump
+
+> Transfers program control flow to the instruction at the memory location indicated by the operand.
+
+```assembly
+jmp <label>
+
+jmp begin — Jump to the instruction labeled begin.
+```
+
+**`j-condition`** — Conditional Jump
+
+> These instructions are conditional jumps that are based on the status of a set of condition codes that are stored in a special register called the machine status word. The contents of the machine status word include information about the last arithmetic operation performed. 
+>
+> For example, one bit of this word indicates if the last result was zero. Another indicates if the last result was negative. Based on these condition codes, a number of conditional jumps can be performed. 
+> For example, the **jz** instruction performs a jump to the specified operand label if the result of the last arithmetic operation was zero. Otherwise, control proceeds to the next instruction in sequence.
+>
+> A number of the conditional branches are given names that are intuitively based on the last operation performed being a special compare instruction, **cmp** (see below). For example, conditional branches such as **jle** and **jne** are based on first performing a **cmp** operation on the desired operands.
+
+```assembly
+je <label> (jump when equal)
+jne <label> (jump when not equal)
+jz <label> (jump when last result was zero)
+jg <label> (jump when greater than)
+jge <label> (jump when greater than or equal to)
+jl <label> (jump when less than)
+jle <label> (jump when less than or equal to)
+
+cmp eax, ebx
+jle done - If the contents of EAX are less than or equal to the contents of EBX, jump to the label done. Otherwise, continue to the next instruction.
+```
+
+**`cmp`** — Compare
+
+> Compare the values of the two specified operands, setting the condition codes in the machine status word appropriately. This instruction is equivalent to the sub instruction, except the result of the subtraction is discarded instead of replacing the first operand.
+
+```assembly
+cmp <reg>,<reg>
+cmp <reg>,<mem>
+cmp <mem>,<reg>
+cmp <reg>,<con>
+
+cmp DWORD PTR [var], 10
+jeq loop  - If the 4 bytes stored at location var are equal to the 4-byte integer constant 10, jump to the location labeled loop.
+```
+
+**`call`**, **`ret`** — Subroutine call and return
+
+> These instructions implement a subroutine call and return. The call instruction first pushes the current code location onto the hardware supported stack in memory (see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.
+>
+> The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.
+
+```assembly
+call <label>
+ret
+```
+
