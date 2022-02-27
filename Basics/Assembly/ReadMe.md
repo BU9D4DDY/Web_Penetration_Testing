@@ -19,7 +19,7 @@ The answers to this question are yes and no. The basic x86 machine code is depen
 
 Using the same assembler, the basic assembly code written on each Operating System is basically the same, except you interact with Windows differently than you interact with Linux.
 
-> Registers
+### Registers
 
 ![img](../../_resources/x86-registers.png)
 
@@ -106,7 +106,7 @@ EIP can only be read through the stack after a `call` instruction.
 
 The x86 architecture is little-endian, meaning that multi-byte values are written least significant byte first. (This refers only to the ordering of the bytes, not to the bits.)
 
-![SEG-Y Rev 2 again: little-endian is legal! — Agile](D:\Projects\Web_Penetration_Testing\_resources\image-asset.png)
+![SEG-Y Rev 2 again: little-endian is legal! — Agile](../../_resources/image-asset.png)
 
 ### Addressing modes
 
