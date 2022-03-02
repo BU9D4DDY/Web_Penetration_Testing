@@ -248,6 +248,8 @@ mov WORD PTR [ebx], 2	; Move the 16-bit integer representation of 2 into the 2 b
 mov DWORD PTR [ebx], 2    	; Move the 32-bit integer representation of 2 into the 4 bytes starting at the address in EBX.
 ```
 
+![image-20220302183043820](../../_resources/image-20220302183043820.png)
+
 ### Declaring Data
 
 we can declare static data regions (analogous to global variables) in x86 assembly using special assembler directives for this purpose. Data declarations should be preceded by the `.DATA` directive. Following this directive, the directives `DB`, `DW`, and `DD `can be used to declare one, two, and four byte data locations, respectively. Declared locations can be labeled with names for later reference — this is similar to declaring variables by name, but abides by some lower level rules. For example, locations declared in sequence will be located in memory next to one another.
@@ -261,14 +263,27 @@ X	 DW ?	; Declare a 2-byte uninitialized value, referred to as location X.
 Y	 DD 30000    	; Declare a 4-byte value, referred to as location Y, initialized to 30000.
 ```
 
+Compiler is not case sensitive, so "**VAR1**" and "**var1**" refer to the same variable.
+
 Unlike in high level languages where arrays can have many dimensions and are accessed by indices, arrays in x86 assembly language are simply a number of cells located contiguously in memory. An array can be declared by just listing the values, as in the example above. Two other common methods used for declaring arrays of data are the `DUP `directive and the use of string literals. The `DUP `directive tells the assembler to duplicate an expression a given number of times. For example, `4 DUP(2) `is equivalent to 2, 2, 2, 2.
 
 ```assembly
 Z	  DD 1, 2, 3	; Declare three 4-byte values, initialized to 1, 2, and 3. The value of location Z + 8 will be 3.
 bytes  DB 10 DUP(?)	; Declare 10 uninitialized bytes starting at location bytes.
 arr	   DD 100 DUP(0)    	; Declare 100 4-byte words starting at location arr, all initialized to 0
+d DB 5 DUP(1, 2)   ;is an alternative way of declaring:
+d DB 1, 2, 1, 2, 1, 2, 1, 2, 1, 2
 str	   DB 'hello',0	; Declare 6 bytes starting at the address str, initialized to the ASCII character values for hello and the null (0) byte.
 ```
+
+**Constants**
+
+Constants are just like variables, but they exist only until your program is compiled (assembled). After definition of a constant its value cannot be changed. To define constants **`EQU`** directive is used:
+```assembly
+k EQU 5
+```
+
+It is possible to enter numbers in any system, hexadecimal numbers should have "**`h`**" suffix, binary "**`b`**" suffix, octal "**`o`**" suffix, decimal numbers require no suffix. String can be entered this way: **`'hello world', 0`** or by adding **`'$'`** at the end like this : **`'hello world', '$'`**
 
 ------
 
@@ -349,6 +364,8 @@ pop edi — pop the top element of the stack into EDI.
 pop [ebx] — pop the top element of the stack into memory at the four bytes starting at location EBX.
 ```
 
+---> NOTE: **PUSH** and **POP** work with 16 bit values and above only!
+
 **`lea`** — Load effective address
 
 > The lea instruction places the *address* specified by its second operand into the register specified by its first operand. Note, the *contents* of the memory location are not loaded, only the effective address is computed and placed into the register. This is useful for obtaining a pointer into a memory region.
@@ -407,7 +424,7 @@ dec eax — subtract one from the contents of EAX.
 inc DWORD PTR [var] — add one to the 32-bit integer stored at location var
 ```
 
-**`imul`** — Integer Multiplication
+**`imul`, `mul`** — Integer Multiplication
 
 > The imul instruction has two basic formats: two-operand (first two syntax listings below) and three-operand (last two syntax listings below)
 >
@@ -425,7 +442,13 @@ imul eax, [var] — multiply the contents of EAX by the 32-bit contents of the m
 imul esi, edi, 25 — ESI → EDI * 25
 ```
 
-**`idiv`** — Integer Division
+`mul `**ALWAYS** uses
+
+- AL for 8 bit ops, product is AX      
+- AX for  16 bit ops, product is DX:AX      
+- EAX for 32 bit ops, product is EDX:EAX
+
+**`idiv`, `div`** — Integer Division
 
 > The idiv instruction divides the contents of the 64 bit integer EDX:EAX (constructed by viewing EDX as the most significant four bytes and EAX as the least significant four bytes) by the specified operand value. The quotient result of the division is stored into EAX, while the remainder is placed in EDX.
 
@@ -436,6 +459,9 @@ idiv <mem>
 idiv ebx — divide the contents of EDX:EAX by the contents of EBX. Place the quotient in EAX and the remainder in EDX.
 idiv DWORD PTR [var] — divide the contents of EDX:EAX by the 32-bit value stored at memory location var. Place the quotient in EAX and the remainder in EDX.
 ```
+
+- If the divisor is 8 bits: Dividend is ALWAYS AX, Quotient is ALWAYS AL, Remainder is ALWAYS AH.
+- If the divisor is 16 bits: dividend is DX:AX, Q is AX, R is DX
 
 **`and`, `or`, `xor`** — Bitwise logical and, or and exclusive or
 
@@ -550,6 +576,12 @@ cmp eax, ebx
 jle done - If the contents of EAX are less than or equal to the contents of EBX, jump to the label done. Otherwise, continue to the next instruction.
 ```
 
+![image-20220302171550936](../../_resources/image-20220302171550936.png)
+
+![image-20220302171712799](../../_resources/image-20220302171712799.png)
+
+![image-20220302171756602](../../_resources/image-20220302171756602.png)
+
 **`cmp`** — Compare
 
 > Compare the values of the two specified operands, setting the condition codes in the machine status word appropriately. This instruction is equivalent to the sub instruction, except the result of the subtraction is discarded instead of replacing the first operand.
@@ -575,58 +607,186 @@ call <label>
 ret
 ```
 
+**LOOPS**
+
+![image-20220302171917669](../../_resources/image-20220302171917669.png)
+
+loops are basically the same jumps, it is possible to code loops without using the loop instruction, by just using conditional jumps and compare, and this is just what loop does.
+
+all loop instructions use **CX** register to count steps, as you know CX register has 16 bits and the maximum value it can hold is 65535 or FFFF, however with some agility it is possible to put one loop into another, and another into another two, and three and etc... and receive a nice value of 65535 * 65535 * 65535 ....till infinity.... or the end of ram or stack memory.
+
+```assembly
+org 100h
+
+mov bx, 0  ; total step counter. 
+
+mov cx, 5
+k1: add bx, 1
+    mov al, '1'
+    mov ah, 0eh
+    int 10h
+    push cx
+    mov cx, 5
+      k2: add bx, 1
+      mov al, '2'
+      mov ah, 0eh
+      int 10h
+      push cx
+         mov cx, 5
+         k3: add bx, 1
+         mov al, '3'
+         mov ah, 0eh
+         int 10h
+         loop k3    ; internal in internal loop. 
+      pop  cx
+      loop  k2      ; internal loop. 
+    pop cx
+loop k1             ; external loop. 
+
+ret
+```
+
+### Interrupts
+
+Interrupts can be seen as a number of functions. These functions make the programming much easier, instead of writing a code to print a character you can simply call the interrupt and it will do everything for you. There are also interrupt functions that work with disk drive and other hardware. We call such functions **software interrupts**.
+
+Interrupts are also triggered by different hardware, these are called **hardware interrupts**. Currently we are interested in **software interrupts** only.
+
 **`INT`** - the INT command generates a call to an interrupt handler
+
+```assembly
+INT value
+```
+
+Where **value** can be a number between 0 to 255 (or 0 to 0FFh), generally we will use hexadecimal numbers.
+You may think that there are only 256 functions, but that is not correct. Each interrupt may have sub-functions.
+
+To specify a sub-function **AH** register should be set before calling interrupt.
+Each interrupt may have up to 256 sub-functions (so we get 256 * 256 = 65536 functions). In general **AH** register is used, but sometimes other registers maybe in use. Generally other registers are used to pass parameters and data to sub-function.
 
 > [**The list of all interrupts that are currently supported by the emulator.**](https://jbwyatt.com/253/emu/8086_bios_and_dos_interrupts.html)
 
----
+The following example uses **INT 10h** sub-function **0Eh** to type a "Hello!" message. This functions displays a character on the screen, advancing the cursor and scrolling the screen as necessary.
 
----
+```assembly
+ORG    100h	; instruct compiler to make simple single segment .com file.
 
----
+; The sub-function that we are using does not modify the AH register on
+; return, so we may set it only once.
 
-https://jbwyatt.com/253/emu/
+MOV    AH, 0Eh    ; select sub-function.
+
+; INT 10h / 0Eh sub-function receives an ASCII code of the
+; character that will be printed in AL register.
+
+MOV    AL, 'H'    ; ASCII code: 72
+INT    10h        ; print it!
+
+MOV    AL, 'e'    ; ASCII code: 101
+INT    10h        ; print it!
+
+MOV    AL, 'l'    ; ASCII code: 108
+INT    10h        ; print it!
+
+MOV    AL, 'l'    ; ASCII code: 108
+INT    10h        ; print it!
+
+MOV    AL, 'o'    ; ASCII code: 111
+INT    10h        ; print it!
+
+MOV    AL, '!'    ; ASCII code: 33
+INT    10h        ; print it!
+
+RET               ; returns to operating system.
+```
+
+### Procedures
+
+Procedure is a part of code that can be called from your program in order to make some specific task. Procedures make program more structural and easier to understand. Generally procedure returns to the same point from where it was called.
+
+The syntax for procedure declaration:
+```assembly
+name PROC
+
+      ; here goes the code
+      ; of the procedure ...
+
+RET
+name ENDP
+```
+
+**`PROC`** and **`ENDP`** are compiler directives, so they are not assembled into any real machine code. Compiler just remembers the address of procedure.
+**`CALL`** instruction is used to call a procedure.
+
+### Macros
+
+Macros are just like procedures, but not really. Macros look like procedures, but they exist only until your code is compiled, after compilation all macros are replaced with real instructions. If you declared a macro and never used it in your code, compiler will simply ignore it.
+
+```assembly
+name    MACRO  [parameters,...]
+
+             <instructions>
+
+ENDM
+```
+
+Unlike procedures, macros should be defined above the code that uses it.
+
+- When you want to use a macro, you can just type its name. For example: `MyMacro` and to pass parameters to macro, you can just type them after the macro name. For example: `MyMacro 1, 2, 3`
+
+- Procedure is located at some specific address in memory, and if you use the same procedure 100 times, the CPU will transfer control to this part of the memory. The control will be returned back to the program by **RET** instruction. The **stack** is used to keep the return address. The **CALL** instruction takes about 3 bytes, so the size of the output executable file grows very insignificantly, no matter how many time the procedure is used.
+
+- Macro is expanded directly in program's code. So if you use the same macro 100 times, the compiler expands the macro 100 times, making the output executable file larger and larger, each time all instructions of a macro are inserted.
+
+- Macros are expanded directly in code, therefore if there are labels inside the macro definition you may get "Duplicate declaration" error when macro is used for twice or more. To avoid such problem, use **LOCAL** directive followed by names of variables, labels or procedure names.
+    ````assembly
+    MyMacro2    MACRO
+    	LOCAL label1, label2
+    
+    	CMP  AX, 2
+    	JE label1
+    	CMP  AX, 3
+    	JE label2
+    	label1:
+    		 INC  AX
+    	label2:
+    		 ADD  AX, 2
+    ENDM
+    
+    ORG 100h
+    
+    MyMacro2
+    MyMacro2
+    
+    RET
+    ````
+
+If you plan to use your macros in several programs, it may be a good idea to place all macros in a separate file. Place that file in **Inc** folder and use` INCLUDE 'file-name'` directive to use macros.
+
+> Here is a [**Complete 8086 instruction set**](https://jbwyatt.com/253/emu/8086_instruction_set.html) 
+
+> Finally, These Are Some Cool Projects To Practice on [Click ME!](https://github.com/Ahmad-Zaklouta/Assembly_emu8086)
+
+
+
+### Recourses
 
 https://jbwyatt.com/253/emu/tutorials.html
 
-https://jbwyatt.com/253/emu/8086_instruction_set.html
-
-https://jbwyatt.com/cis253.html
-
-https://sensepost.com/blogstatic/2014/01/SensePost_crash_course_in_x86_assembly-.pdf
-
-https://trailofbits.github.io/ctf/vulnerabilities/references/X86_Win32_Reverse_Engineering_Cheat_Sheet.pdf
-
-https://www.bencode.net/blob/nasmcheatsheet.pdf
-
-https://asmtutor.com/
-
-https://www.youtube.com/watch?v=Wz_xJPN7lAY&ab_channel=Creel
-
-https://www.youtube.com/playlist?list=PL6brsSrstzga43kcZRn6nbSi_GeXoZQhR
-
-https://www.youtube.com/watch?v=KrksBdWcZgQ&ab_channel=BlackHat
-
-https://www.youtube.com/watch?v=HgEGAaYdABA&ab_channel=JohnHammond
-
-https://hbh.sh/code/3/1881/win32-virus
-
-https://hbh.sh/code/3/1497/prints-terms-of-the-fibonacci-series
-
-https://hbh.sh/code/3/1257/asm-print
-
-https://sensepost.com/blogstatic/2014/01/SensePost_crash_course_in_x86_assembly-.pdf
-
-https://github.com/the-akira/Computer-Science-Resources/blob/master/db/assembly.md
-
-R ---
-
 http://www.cs.virginia.edu/~evans/cs216/guides/x86.html
-
-https://www.nayuki.io/page/a-fundamental-introduction-to-x86-assembly-programming
-
-https://www.nayuki.io/category/x86
 
 https://en.wikibooks.org/wiki/X86_Assembly/Print_Version
 
-https://github.com/Ahmad-Zaklouta/Assembly_emu8086
+https://teambi0s.gitlab.io/bi0s-wiki/reversing/asm/
+
+NASM Assembly Language Tutorials - [asmtutor.com](https://asmtutor.com/)
+
+https://logic.ly/demo/
+
+> Cheat-Sheets
+
+ [X86_Win32_Reverse_Engineering_Cheat_Sheet.pdf](https://trailofbits.github.io/ctf/vulnerabilities/references/X86_Win32_Reverse_Engineering_Cheat_Sheet.pdf) 
+
+[nasmcheatsheet.pdf](https://www.bencode.net/blob/nasmcheatsheet.pdf)
+
+[A Crash Course in x86 Assembly for Reverse Engineers](https://sensepost.com/blogstatic/2014/01/SensePost_crash_course_in_x86_assembly-.pdf)
