@@ -783,6 +783,12 @@ NASM Assembly Language Tutorials - [asmtutor.com](https://asmtutor.com/)
 
 https://logic.ly/demo/
 
+https://youtube.com/playlist?list=PL6brsSrstzga43kcZRn6nbSi_GeXoZQhR
+
+https://youtu.be/KrksBdWcZgQ
+
+https://youtu.be/Wz_xJPN7lAY
+
 > Cheat-Sheets
 
  [X86_Win32_Reverse_Engineering_Cheat_Sheet.pdf](https://trailofbits.github.io/ctf/vulnerabilities/references/X86_Win32_Reverse_Engineering_Cheat_Sheet.pdf) 
