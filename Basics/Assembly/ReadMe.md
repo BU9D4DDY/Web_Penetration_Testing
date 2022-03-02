@@ -4,6 +4,10 @@ The x86 instruction set architecture is at the heart of CPUs that power computer
 
 Assembly language is one of the closest forms of communication that humans can engage in with a computer. With assembly, the programmer can precisely track the flow of data and execution in a program in a mostly human-readable form.
 
+![img](../../_resources/model.gif)
+
+the **system bus** (shown in yellow) connects the various components of a computer. The **CPU** is the heart of the computer, most of computations occur inside the **CPU**. **RAM** is a place to where the programs are loaded in order to be executed.
+
 This guide describes the basics of 32-bit x86 assembly language programming, covering a small but useful subset of the available instructions and assembler directives. There are several different assembly languages for generating x86 machine code. The one we will use is the Microsoft Macro Assembler (MASM) assembler. MASM uses the standard Intel syntax for writing x86 assembly code.
 
 The prerequisites to reading this article are working with binary numbers, moderate experience programming in an imperative language (C/C++/Java/Python/etc.), and the concept of memory pointers (C/C++). You do not need to know how CPUs work internally or have prior exposure to assembly language.
@@ -27,6 +31,10 @@ The answers to this question are yes and no. The basic x86 machine code is depen
 4. The available code libraries are different on Windows and Linux.
 
 Using the same assembler, the basic assembly code written on each Operating System is basically the same, except you interact with Windows differently than you interact with Linux.
+
+### **inside the CPU**
+
+![img](https://jbwyatt.com/253/emu/img/cpu.gif)
 
 ### Registers
 
@@ -116,6 +124,11 @@ EIP can only be read through the stack after a `call` instruction.
 The x86 architecture is little-endian, meaning that multi-byte values are written least significant byte first. (This refers only to the ordering of the bytes, not to the bits.)
 
 ![SEG-Y Rev 2 again: little-endian is legal! — Agile](../../_resources/image-asset.png)
+
+segment registers work together with general purpose register to access any memory value. For example if we would like to access memory at the physical address **12345h** (hexadecimal), we should set the **DS = 1230h** and **SI = 0045h**. This is good, since this way we can access much more memory than with a single register that is limited to 16 bit values.
+CPU makes a calculation of physical address by multiplying the segment register by 10h and adding general purpose register to it (1230h * 10h + 45h = 12345h):
+![img](../../_resources/effective_address.gif)
+the address formed with 2 registers is called an **effective address**. by default **BX, SI** and **DI** registers work with **DS** segment register; **BP** and **SP** work with **SS** segment register. Other general purpose registers cannot form an effective address! also, although **BX** can form an effective address, **BH** and **BL** cannot.
 
 ### Addressing modes
 
@@ -281,6 +294,8 @@ We use the following notation:
 **`mov`** — Move (Opcodes: 88, 89, 8A, 8B, 8C, 8E, ...)
 
 > The mov instruction copies the data item referred to by its second operand (i.e. register contents, memory contents, or a constant value) into the location referred to by its first operand (i.e. a register or memory). While register-to-register moves are possible, **direct memory-to-memory moves are not.** In cases where memory transfers are desired, the source memory contents must first be loaded into a register, then can be stored to the destination memory address.
+>
+> the **MOV** instruction cannot be used to set the value of the **CS** and **IP** registers.
 
 ```assembly
 mov <reg>,<reg>
@@ -292,6 +307,22 @@ mov <mem>,<const>
 mov eax, ebx — copy the value in ebx into eax
 mov byte ptr [var], 5 — store the value 5 into the byte at location var
 ```
+
+here is a short program that demonstrates the use of **MOV** instruction:
+```assembly
+ORG 100h           ; this directive required for a simple 1 segment .com program. 
+MOV AX, 0B800h     ; set AX to hexadecimal value of B800h. 
+MOV DS, AX         ; copy value of AX to DS. 
+MOV CL, 'A'        ; set CL to ASCII code of 'A', it is 41h. 
+MOV CH, 1101_1111b ; set CH to binary value. 
+MOV BX, 15Eh       ; set BX to 15Eh. 
+MOV [BX], CX       ; copy contents of CX to memory at B800:015E 
+RET                ; returns to operating system. 
+```
+
+![img](../../_resources/screen01.gif)
+
+actually the above program writes directly to video memory, so you may see that **MOV** is a very powerful instruction.
 
 **`push`** — Push stack (Opcodes: FF, 89, 8A, 8B, 8C, 8E, ...)
 
@@ -577,6 +608,16 @@ https://www.youtube.com/playlist?list=PL6brsSrstzga43kcZRn6nbSi_GeXoZQhR
 https://www.youtube.com/watch?v=KrksBdWcZgQ&ab_channel=BlackHat
 
 https://www.youtube.com/watch?v=HgEGAaYdABA&ab_channel=JohnHammond
+
+https://hbh.sh/code/3/1881/win32-virus
+
+https://hbh.sh/code/3/1497/prints-terms-of-the-fibonacci-series
+
+https://hbh.sh/code/3/1257/asm-print
+
+https://sensepost.com/blogstatic/2014/01/SensePost_crash_course_in_x86_assembly-.pdf
+
+https://github.com/the-akira/Computer-Science-Resources/blob/master/db/assembly.md
 
 R ---
 

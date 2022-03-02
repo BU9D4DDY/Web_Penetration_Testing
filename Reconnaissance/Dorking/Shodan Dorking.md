@@ -1,3 +1,5 @@
+> https://community.turgensec.com/shodan-pentesting-guide/
+
 Everyone knows [Shodan](https://www.shodan.io/). Similar principle of operation, like Google Dorking, only on different input data.
 
 ![shodan hacks](../../_resources/shodanhacks.png)

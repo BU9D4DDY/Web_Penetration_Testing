@@ -8,3 +8,4 @@ https://towardsdatascience.com/novice-to-advanced-regex-in-nine-minutes-or-less-
 
 https://dev.to/zidniryi/advanced-regex-with-modern-javascript-complete-guide-1d4d
 
+https://github.com/the-akira/Computer-Science-Resources/blob/master/db/regular_expressions.md
